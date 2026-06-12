@@ -1,6 +1,8 @@
 import streamlit as st
 import PyPDF2
+
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from sentence_transformers import SentenceTransformer
 
 # Page Title
 st.set_page_config(page_title="PDF Question Answering System")
@@ -46,6 +48,17 @@ if uploaded_file:
     )
 
     chunks = text_splitter.split_text(extracted_text)
+
+    # Embedding Generation
+
+    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+    embeddings = embedding_model.encode(chunks)
+
+    # Display Embedding Information
+
+    st.subheader("Embedding Information")
+    st.write(f"Total Embeddings Created: {len(embeddings)}")
+    st.write(f"Embedding Dimension: {len(embeddings[0])}")
 
     # Display Chunk Information
 
