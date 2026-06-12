@@ -1,5 +1,7 @@
 import streamlit as st
 import PyPDF2
+import faiss
+import numpy as np
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
@@ -49,17 +51,6 @@ if uploaded_file:
 
     chunks = text_splitter.split_text(extracted_text)
 
-    # Embedding Generation
-
-    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
-    embeddings = embedding_model.encode(chunks)
-
-    # Display Embedding Information
-
-    st.subheader("Embedding Information")
-    st.write(f"Total Embeddings Created: {len(embeddings)}")
-    st.write(f"Embedding Dimension: {len(embeddings[0])}")
-
     # Display Chunk Information
 
     st.subheader("Document Chunks")
@@ -74,3 +65,25 @@ if uploaded_file:
             chunk,
             height=150
         )
+
+    # Embedding Generation
+
+    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+    embeddings = embedding_model.encode(chunks)
+
+    # Display Embedding Information
+
+    st.subheader("Embedding Information")
+    st.write(f"Total Embeddings Created: {len(embeddings)}")
+    st.write(f"Embedding Dimension: {len(embeddings[0])}")
+
+    # FAISS Vector Store Creation
+
+    embedding_dimension = embeddings.shape[1]
+    faiss_index = faiss.IndexFlatL2(embedding_dimension)
+    faiss_index.add(np.array(embeddings).astype("float32"))
+
+    # Display FAISS Information
+
+    st.subheader("FAISS Vector Store")
+    st.write(f"Total Vectors Stored: {faiss_index.ntotal}")
