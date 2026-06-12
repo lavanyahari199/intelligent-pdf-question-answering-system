@@ -87,3 +87,30 @@ if uploaded_file:
 
     st.subheader("FAISS Vector Store")
     st.write(f"Total Vectors Stored: {faiss_index.ntotal}")
+
+    # User Question Input
+
+    st.subheader("Ask Questions About The PDF")
+    question = st.text_input("Enter your question")
+
+    if question:
+        # Question Embedding Generation
+        question_embedding = embedding_model.encode([question])
+
+        # Similarity Search
+        distances, indices = faiss_index.search(
+            np.array(question_embedding).astype("float32"),
+            k=3
+            )
+        
+        # Display Matching Chunks
+        st.subheader("Top Matching Chunks")
+
+        for rank, chunk_index in enumerate(indices[0]):
+            st.write(f"Match {rank + 1}")
+
+            st.text_area(
+                f"Retrieved Chunk {rank + 1}",
+                chunks[chunk_index],
+                height=150
+            )
