@@ -1,5 +1,6 @@
 import streamlit as st
 import PyPDF2
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # Page Title
 st.set_page_config(page_title="PDF Question Answering System")
@@ -39,14 +40,12 @@ if uploaded_file:
 
     # Document Chunking
 
-    chunk_size = 1000
-    chunk_overlap = 200
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1000,
+        chunk_overlap=200
+    )
 
-    chunks = []
-
-    for i in range(0, len(extracted_text), chunk_size - chunk_overlap):
-        chunk = extracted_text[i:i + chunk_size]
-        chunks.append(chunk)
+    chunks = text_splitter.split_text(extracted_text)
 
     # Display Chunk Information
 
