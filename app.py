@@ -36,3 +36,29 @@ if uploaded_file:
         extracted_text,
         height=300
     )
+
+    # Document Chunking
+
+    chunk_size = 1000
+    chunk_overlap = 200
+
+    chunks = []
+
+    for i in range(0, len(extracted_text), chunk_size - chunk_overlap):
+        chunk = extracted_text[i:i + chunk_size]
+        chunks.append(chunk)
+
+    # Display Chunk Information
+
+    st.subheader("Document Chunks")
+    st.write(f"Total Chunks Created: {len(chunks)}")
+
+    # Display First Three Chunks
+
+    for index, chunk in enumerate(chunks[:3]):
+        st.write(f"Chunk {index + 1}")
+        st.text_area(
+            f"Chunk {index + 1} Content",
+            chunk,
+            height=150
+        )
