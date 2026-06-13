@@ -1,7 +1,20 @@
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+api_key = os.getenv("GEMINI_API_KEY")
+
 import streamlit as st
 import PyPDF2
 import faiss
 import numpy as np
+import google.generativeai as genai
+
+# Gemini Configuration
+genai.configure(api_key=api_key)
+
+# Gemini Model Initialization
+gemini_model = genai.GenerativeModel("gemini-2.5-flash")
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
@@ -114,3 +127,28 @@ if uploaded_file:
                 chunks[chunk_index],
                 height=150
             )
+        
+        # Combine Retrieved Chunks
+        retrieved_context = ""
+
+        for chunk_index in indices[0]:
+            retrieved_context += chunks[chunk_index]
+            retrieved_context += "\n\n"
+
+        # Prompt Creation
+        prompt = f"""
+        Answer the question using only the provided context.
+
+        Context:
+        {retrieved_context}
+
+        Question:
+        {question}
+        """
+
+        # Gemini Answer Generation
+        response = gemini_model.generate_content(prompt)
+
+        # Display Final Answer
+        st.subheader("Generated Answer")
+        st.write(response.text)
