@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 import os
 
+# Load environment variables from .env file
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 
@@ -10,11 +11,19 @@ import faiss
 import numpy as np
 import google.generativeai as genai
 
+# Caching Models for Performance Optimization
+@st.cache_resource
+def load_embedding_model():
+    return SentenceTransformer("all-MiniLM-L6-v2")
+@st.cache_resource
+def load_gemini_model():
+    return genai.GenerativeModel("gemini-2.5-flash")
+
 # Gemini Configuration
 genai.configure(api_key=api_key)
 
 # Gemini Model Initialization
-gemini_model = genai.GenerativeModel("gemini-2.5-flash")
+gemini_model = load_gemini_model()
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
@@ -59,7 +68,7 @@ if uploaded_file:
 
         # Embedding Generation
 
-        embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+        embedding_model = load_embedding_model()
         embeddings = embedding_model.encode(chunks)
 
         # FAISS Vector Store Creation
