@@ -10,6 +10,7 @@ import PyPDF2
 import faiss
 import numpy as np
 import google.generativeai as genai
+import io
 
 # Caching Models for Performance Optimization
 @st.cache_resource
@@ -28,6 +29,38 @@ gemini_model = load_gemini_model()
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
 
+# Caching PDF Processing for Performance Optimization
+@st.cache_data
+def process_pdf(pdf_bytes):
+
+    # Convert uploaded PDF bytes into a readable PDF object    
+    pdf_reader = PyPDF2.PdfReader(
+        io.BytesIO(pdf_bytes)
+    )
+    extracted_text = ""
+
+    # Extract text from all pages
+    for page in pdf_reader.pages:
+        page_text = page.extract_text()
+
+        if page_text:
+            extracted_text += page_text
+
+    # Split document into smaller chunks
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1000,
+        chunk_overlap=200
+    )
+
+    chunks = text_splitter.split_text(extracted_text)
+
+    # Generate embeddings for all chunks
+    embedding_model = load_embedding_model()
+    embeddings = embedding_model.encode(chunks)
+
+    # Return processed data and cache it
+    return chunks, embeddings
+
 # Page Title
 st.set_page_config(page_title="PDF Question Answering System")
 
@@ -44,32 +77,13 @@ if uploaded_file:
 
     with st.spinner("Processing PDF..."):
 
-        st.success(f"Uploaded: {uploaded_file.name}")
+        # Process PDF only once and reuse cached results
+        chunks, embeddings = process_pdf(uploaded_file.getvalue())
 
-        # PDF Text Extraction
-        pdf_reader = PyPDF2.PdfReader(uploaded_file)
-
-        extracted_text = ""
-
-        for page in pdf_reader.pages:
-            page_text = page.extract_text()
-
-            if page_text:
-                extracted_text += page_text
-
-        # Document Chunking
-
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=1000,
-            chunk_overlap=200
-        )
-
-        chunks = text_splitter.split_text(extracted_text)
-
-        # Embedding Generation
-
+        # Load cached embedding model
         embedding_model = load_embedding_model()
-        embeddings = embedding_model.encode(chunks)
+
+        st.success(f"Uploaded: {uploaded_file.name}")
 
         # FAISS Vector Store Creation
 
