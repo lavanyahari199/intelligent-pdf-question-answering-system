@@ -164,8 +164,9 @@ http://localhost:8501
 * Error Handling
 * Model Caching
 * PDF Processing Cache
+* Session State Management
 
-Current Development Stage: **Milestone 11**
+Current Development Stage: **Milestone 12**
 
 ## Repository Structure
 

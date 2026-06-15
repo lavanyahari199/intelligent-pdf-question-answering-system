@@ -300,6 +300,38 @@ Avoid repeated document processing when users ask multiple questions on the same
 
 * Optimized document processing workflow
 
+## Milestone 12 – Session State Answer Management
+
+### Objective
+
+Improve user experience by managing answer display across Streamlit reruns and preventing stale answers from remaining visible while new answers are being generated.
+
+### Tasks Completed
+
+* Initialized Streamlit Session State.
+* Created persistent answer storage using `st.session_state`.
+* Added answer placeholder using `st.empty()`.
+* Cleared previous answers before generating new responses.
+* Stored Gemini-generated answers in Session State.
+* Displayed answers using a dynamic placeholder.
+
+### Technologies Introduced
+
+* Streamlit Session State
+* Streamlit Placeholder Components
+
+### User Experience Improvement
+
+* Eliminated stale answer display during new question processing.
+* Improved answer lifecycle management.
+* Provided cleaner interaction flow between consecutive questions.
+
+### Deliverables
+
+* Session-based answer management.
+* Dynamic answer rendering.
+* Enhanced user experience during repeated queries.
+
 ## Supporting Assets Created During Development
 
 ### Environment Configuration

@@ -67,6 +67,10 @@ st.set_page_config(page_title="PDF Question Answering System")
 # Application Main Heading
 st.title("📄 Intelligent PDF Question Answering System")
 
+# Session State Initialization
+if "answer" not in st.session_state:
+    st.session_state.answer = ""
+
 # PDF Upload
 uploaded_file = st.file_uploader(
     "Upload a PDF file",
@@ -95,6 +99,9 @@ if uploaded_file:
 
         st.subheader("Ask Questions About The PDF")
         question = st.text_input("Enter your question")
+
+        # Placeholder for answer display
+        answer_placeholder = st.empty()
 
         if question and question.strip():
             # Question Embedding Generation
@@ -125,12 +132,21 @@ if uploaded_file:
             """
 
             try:
+                # Clear previous answer from UI
+                answer_placeholder.empty()
+                st.session_state.answer = ""
+
                 # Gemini Answer Generation
                 with st.spinner("Generating answer..."):
                     response = gemini_model.generate_content(prompt)
 
+                # Store the generated answer in session state
+                st.session_state.answer = response.text
+
                 # Display Final Answer
-                st.subheader("Generated Answer")
-                st.write(response.text)
+                if st.session_state.answer:
+                    answer_placeholder.subheader("Generated Answer")
+                    answer_placeholder.write(st.session_state.answer)
+                
             except Exception as e:
                 st.error(f"Error generating answer: {e}")
