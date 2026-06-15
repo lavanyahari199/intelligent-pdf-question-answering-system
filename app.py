@@ -112,7 +112,12 @@ if uploaded_file:
                 np.array(question_embedding).astype("float32"),
                 k=3
                 )
-            
+            # Store retrieved chunk numbers with ranks
+            retrieved_chunks_with_rank = [
+                (rank + 1, chunk_index + 1)
+                for rank, chunk_index in enumerate(indices[0])
+            ]
+
             # Combine Retrieved Chunks
             retrieved_context = ""
             for chunk_index in indices[0]:
@@ -156,6 +161,12 @@ if uploaded_file:
                 if st.session_state.answer:
                     answer_placeholder.subheader("Generated Answer")
                     answer_placeholder.write(st.session_state.answer)
-                
+
+                    # Display Sources Used
+                    st.markdown("---")
+                    st.subheader("Sources Used")
+                    for rank, chunk_number in retrieved_chunks_with_rank:
+                        st.write(f"📌 Chunk {chunk_number} (Rank: #{rank})")
+
             except Exception as e:
                 st.error(f"Error generating answer: {e}")

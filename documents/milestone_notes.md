@@ -361,6 +361,36 @@ Increase transparency of the RAG pipeline by displaying the document chunks retr
 * Improved RAG explainability.
 * Enhanced application transparency.
 
+## Milestone 14 – Source Attribution
+
+### Objective
+
+Improve answer transparency by displaying the document chunks used during answer generation.
+
+### Tasks Completed
+
+* Stored retrieved chunk identifiers from FAISS search results.
+* Added source attribution section below generated answers.
+* Displayed retrieved chunk references used for answer generation.
+* Linked generated responses to supporting document context.
+
+### Technologies Introduced
+
+* Retrieval Source Attribution
+
+### User Experience Improvement
+
+* Increased answer transparency.
+* Improved trust in generated responses.
+* Enabled verification of supporting context.
+* Made retrieval results more explainable.
+
+### Deliverables
+
+* Source attribution system.
+* Improved answer explainability.
+* Enhanced RAG transparency.
+
 ## Supporting Assets Created During Development
 
 ### Environment Configuration
