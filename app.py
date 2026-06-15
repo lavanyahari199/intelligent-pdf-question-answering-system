@@ -115,10 +115,19 @@ if uploaded_file:
             
             # Combine Retrieved Chunks
             retrieved_context = ""
-
             for chunk_index in indices[0]:
                 retrieved_context += chunks[chunk_index]
                 retrieved_context += "\n\n"
+
+            # Display Retrieved Chunks in an Expander
+            with st.expander("View Retrieved Chunks"):
+                for rank, chunk_index in enumerate(indices[0]):
+                    st.markdown(f"### Chunk {rank + 1}")
+                    st.text_area(
+                        f"Retrieved Chunk {rank + 1}",
+                        chunks[chunk_index],
+                        height=150
+                    )
 
             # Prompt Creation
             prompt = f"""

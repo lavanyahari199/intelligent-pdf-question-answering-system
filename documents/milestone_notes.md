@@ -332,6 +332,35 @@ Improve user experience by managing answer display across Streamlit reruns and p
 * Dynamic answer rendering.
 * Enhanced user experience during repeated queries.
 
+## Milestone 13 – Retrieved Chunks Display
+
+### Objective
+
+Increase transparency of the RAG pipeline by displaying the document chunks retrieved during semantic search.
+
+### Tasks Completed
+
+* Added retrieved chunk visualization.
+* Integrated Streamlit expander component.
+* Displayed top matching chunks returned by FAISS.
+* Organized retrieved context into ranked sections.
+
+### Technologies Introduced
+
+* Streamlit Expander Component
+
+### User Experience Improvement
+
+* Improved transparency of retrieval process.
+* Allowed users to inspect source context.
+* Demonstrated semantic search functionality.
+
+### Deliverables
+
+* Retrieved chunk visualization.
+* Improved RAG explainability.
+* Enhanced application transparency.
+
 ## Supporting Assets Created During Development
 
 ### Environment Configuration

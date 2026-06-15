@@ -165,8 +165,9 @@ http://localhost:8501
 * Model Caching
 * PDF Processing Cache
 * Session State Management
+* Retrieved Chunk Visualization
 
-Current Development Stage: **Milestone 12**
+Current Development Stage: **Milestone 13**
 
 ## Repository Structure
 
