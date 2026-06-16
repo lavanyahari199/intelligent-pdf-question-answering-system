@@ -6,17 +6,21 @@ The system extracts text from uploaded PDFs, converts document chunks into vecto
 
 ## Features
 
-* Upload PDF documents through a Streamlit web interface
+* Upload one or more PDF documents through a Streamlit web interface
 * Automatic PDF text extraction
 * Document chunking with overlap preservation
 * Semantic embeddings using Sentence Transformers
 * FAISS vector database for similarity search
 * Retrieval-Augmented Generation (RAG) workflow
 * Context-aware answer generation using Gemini 2.5 Flash
+* Chat-style question answering interface
+* Session-based conversation history
+* Supporting chunk attribution for every answer
+* PDF statistics display (pages and chunks)
+* Clear chat functionality
 * Error handling and input validation
 * Streamlit caching for improved performance
 * Reusable document processing pipeline
-* Session-based question history
 
 ## Technology Stack
 
@@ -168,9 +172,13 @@ http://localhost:8501
 * Session State Management
 * Retrieved Chunk Visualization
 * Source Attribution
-* Question History
+* Multi-PDF Upload Support
+* Chat-Based Interface
+* Session-Based Conversation History
+* Supporting Chunk Attribution
+* Clear Chat Functionality
 
-Current Development Stage: **Milestone 15**
+Current Development Stage: **Milestone 16**
 
 ## Repository Structure
 

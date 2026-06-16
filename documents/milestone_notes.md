@@ -422,6 +422,48 @@ Maintain a history of user questions asked during the current application sessio
 * Dynamic question history display.
 * Duplicate question prevention.
 
+# Milestone 16 – Multi-PDF Support and Chat Interface
+
+### Objective
+
+Transform the application from a single-document question answering system into a conversational multi-document RAG application with an improved user experience.
+
+### Tasks Completed
+
+* Added support for uploading multiple PDF documents simultaneously.
+* Processed and combined document chunks from multiple PDFs.
+* Aggregated embeddings from all uploaded documents into a unified FAISS index.
+* Added PDF statistics including total page count and chunk count.
+* Replaced the traditional question-answer display with a chat-style interface.
+* Introduced session-based conversation history using Streamlit Session State.
+* Stored questions, answers, and supporting chunk references within chat history.
+* Added supporting chunk attribution for every generated answer.
+* Added Clear Chat functionality to reset conversation history.
+* Simplified session state management by removing legacy answer and question-history tracking.
+* Improved overall application usability and interaction flow.
+
+### Technologies Introduced
+
+* Streamlit Chat Components
+* Multi-Document Retrieval
+* Session-Based Conversation Management
+
+### User Experience Improvement
+
+* Users can query multiple documents simultaneously.
+* Previous conversations remain visible throughout the session.
+* Supporting chunks are displayed alongside each answer.
+* Chat interactions provide a more natural conversational experience.
+* Users can clear conversations without re-uploading documents.
+
+### Deliverables
+
+* Multi-PDF document support.
+* Chat-based user interface.
+* Persistent conversation history.
+* Supporting chunk attribution per response.
+* Improved RAG application usability.
+
 ## Supporting Assets Created During Development
 
 ### Environment Configuration
