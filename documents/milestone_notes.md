@@ -391,6 +391,37 @@ Improve answer transparency by displaying the document chunks used during answer
 * Improved answer explainability.
 * Enhanced RAG transparency.
 
+# Milestone 15 – Question History
+
+### Objective
+
+Maintain a history of user questions asked during the current application session for improved usability and traceability.
+
+### Tasks Completed
+
+* Added question history tracking using Streamlit Session State.
+* Initialized question history storage.
+* Stored user questions dynamically during runtime.
+* Prevented duplicate question entries.
+* Displayed question history below generated answers.
+* Ordered questions from newest to oldest.
+
+### Technologies Introduced
+
+* Streamlit Session State
+
+### Benefits
+
+* Allows users to review previously asked questions.
+* Improves interaction tracking within a session.
+* Enhances overall user experience.
+
+### Deliverables
+
+* Session-based question history tracking.
+* Dynamic question history display.
+* Duplicate question prevention.
+
 ## Supporting Assets Created During Development
 
 ### Environment Configuration

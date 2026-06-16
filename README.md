@@ -16,6 +16,7 @@ The system extracts text from uploaded PDFs, converts document chunks into vecto
 * Error handling and input validation
 * Streamlit caching for improved performance
 * Reusable document processing pipeline
+* Session-based question history
 
 ## Technology Stack
 
@@ -167,8 +168,9 @@ http://localhost:8501
 * Session State Management
 * Retrieved Chunk Visualization
 * Source Attribution
+* Question History
 
-Current Development Stage: **Milestone 14**
+Current Development Stage: **Milestone 15**
 
 ## Repository Structure
 

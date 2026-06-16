@@ -71,6 +71,10 @@ st.title("📄 Intelligent PDF Question Answering System")
 if "answer" not in st.session_state:
     st.session_state.answer = ""
 
+# Initialize question history in session state to keep track of user questions
+if "question_history" not in st.session_state:
+    st.session_state.question_history = []
+
 # PDF Upload
 uploaded_file = st.file_uploader(
     "Upload a PDF file",
@@ -102,8 +106,15 @@ if uploaded_file:
 
         # Placeholder for answer display
         answer_placeholder = st.empty()
+        # Placeholder for error messages
+        error_placeholder = st.empty()
 
         if question and question.strip():
+
+            # Store the question in session state history if it's not already present
+            if question not in st.session_state.question_history:
+                st.session_state.question_history.append(question)
+
             # Question Embedding Generation
             question_embedding = embedding_model.encode([question])
 
@@ -148,6 +159,8 @@ if uploaded_file:
             try:
                 # Clear previous answer from UI
                 answer_placeholder.empty()
+                # Clear any previous error messages
+                error_placeholder.empty()
                 st.session_state.answer = ""
 
                 # Gemini Answer Generation
@@ -168,5 +181,21 @@ if uploaded_file:
                     for rank, chunk_number in retrieved_chunks_with_rank:
                         st.write(f"📌 Chunk {chunk_number} (Rank: #{rank})")
 
+                    # Display Question History
+                    st.markdown("---")
+                    st.subheader("Question History")
+
+                    for i, previous_question in enumerate(
+                            reversed(st.session_state.question_history),
+                            start=1):
+                        st.write(f"{i}. {previous_question}")
+
             except Exception as e:
-                st.error(f"Error generating answer: {e}")
+                # Developer log
+                print(f"Gemini Error: {e}")
+
+                # User-friendly message
+                error_placeholder.error(
+                    "Unable to generate an answer at the moment. "
+                    "Please try again later."
+                )
